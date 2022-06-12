@@ -11,7 +11,31 @@ import SimpleFooter from 'components/SimpleFooter';
 import Page from 'components/login/Page';
 import Container from 'components/login/Container';
 
+import { useEffect } from 'react';
+import { GoogleButton } from 'react-google-button';
+import { UserAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+
 export default function Login() {
+
+    const navigate = useNavigate();
+    const { googleSignIn, user } = UserAuth();
+
+    const handleGoogleSignIn = async () => {
+        try {
+            await googleSignIn();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        if (user != null) {
+          navigate('/profile');
+        }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [user]);
+
     return (
         <Page>
             <DefaultNavbar />
@@ -24,6 +48,9 @@ export default function Login() {
                     </CardHeader>
 
                     <CardBody>
+                        <div className="mb-12 px-4 bg-bb">
+                            <GoogleButton onClick={handleGoogleSignIn}/>
+                        </div>
                         <div className="mb-12 px-4 bg-bb">
                             <InputIcon
                                 type="email"
