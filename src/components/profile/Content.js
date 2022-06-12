@@ -4,8 +4,13 @@ import H3 from '@material-tailwind/react/Heading3';
 import Icon from '@material-tailwind/react/Icon';
 import LeadText from '@material-tailwind/react/LeadText';
 import ProfilePicture from 'assets/img/team-2-800x800.jpg';
+import { UserAuth } from 'context/AuthContext';
 
 export default function Content() {
+
+    const { user } = UserAuth();
+
+
     return (
         <section className="relative py-16 bg-gray-100">
             <div className="container max-w-7xl px-4 mx-auto">
@@ -60,7 +65,7 @@ export default function Content() {
                         </div>
 
                         <div className="text-center my-8">
-                            <H3 color="gray">Jenna Stones</H3>
+                            <H3 color="gray">{user?.displayName}</H3>
                             <div className="mt-0 mb-2 text-gray-700 font-medium flex items-center justify-center gap-2">
                                 <Icon name="place" size="xl" />
                                 Los Angeles, California
