@@ -65,7 +65,7 @@ export default function Content() {
                         </div>
 
                         <div className="text-center my-8">
-                            <H3 color="gray">{user?.displayName}</H3>
+                            <H3 color="gray">{user?.displayName}<div /></H3>
                             <div className="mt-0 mb-2 text-gray-700 font-medium flex items-center justify-center gap-2">
                                 <Icon name="place" size="xl" />
                                 Los Angeles, California
