@@ -3,9 +3,13 @@ import Image from '@material-tailwind/react/Image';
 import H3 from '@material-tailwind/react/Heading3';
 import Icon from '@material-tailwind/react/Icon';
 import LeadText from '@material-tailwind/react/LeadText';
-import ProfilePicture from 'assets/img/team-2-800x800.jpg';
+import { UserAuth } from 'context/AuthContext';
 
 export default function Content() {
+
+    const { user } = UserAuth();
+
+
     return (
         <section className="relative py-16 bg-gray-100">
             <div className="container max-w-7xl px-4 mx-auto">
@@ -16,8 +20,8 @@ export default function Content() {
                                 <div className="relative">
                                     <div className="w-40 -mt-20">
                                         <Image
-                                            src={ProfilePicture}
-                                            alt="Profile picture"
+                                            src={user.photoURL}
+                                            alt="User picture"
                                             raised
                                             rounded
                                         />
@@ -60,12 +64,16 @@ export default function Content() {
                         </div>
 
                         <div className="text-center my-8">
-                            <H3 color="gray">Jenna Stones</H3>
+                            <H3 color="gray">{user?.displayName}<div /></H3>
                             <div className="mt-0 mb-2 text-gray-700 font-medium flex items-center justify-center gap-2">
                                 <Icon name="place" size="xl" />
                                 Los Angeles, California
                             </div>
-                            <div className="mb-2 text-gray-700 mt-10 flex items-center justify-center gap-2">
+                            <div className="mb-2 text-gray-700 flex items-center justify-center gap-2">
+                                <Icon name="mail" size="xl" />
+                                {user.email}
+                            </div>
+                            <div className="mb-2 text-gray-700 flex items-center justify-center gap-2">
                                 <Icon name="work" size="xl" />
                                 Solution Manager - Creative Tim Officer
                             </div>
