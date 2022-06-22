@@ -87,13 +87,6 @@ export default function DefaultNavbarAdmin() {
                      <span className="ml-3">Group</span>
                   </NavLink>
                </li>
-                
-               <li>
-                  <NavLink activeStyle={{ backgroundColor: 'rgb(243 244 246)', color: 'black' }} to="/UsersManagement" className="flex hover:text-black items-center p-2 text-base font-normal  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                     <EmojiPeopleIcon className="w-6 h-6 text-gray-500 transition -mt-2 duration-75 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" />
-                     <span className="ml-3">Booking</span>
-                  </NavLink>
-               </li>
                <li>
                   <NavLink activeStyle={{ backgroundColor: 'rgb(243 244 246)', color: 'black' }} to="/UsersManagement" className="flex hover:text-black items-center p-2 text-base font-normal  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                      <CheckCircleIcon className="w-6 h-6 text-gray-500 transition -mt-2 duration-75 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" />
