@@ -69,7 +69,11 @@ export default function Content() {
                                 <Icon name="place" size="xl" />
                                 Los Angeles, California
                             </div>
-                            <div className="mb-2 text-gray-700 mt-10 flex items-center justify-center gap-2">
+                            <div className="mb-2 text-gray-700 flex items-center justify-center gap-2">
+                                <Icon name="mail" size="xl" />
+                                {user.email}
+                            </div>
+                            <div className="mb-2 text-gray-700 flex items-center justify-center gap-2">
                                 <Icon name="work" size="xl" />
                                 Solution Manager - Creative Tim Officer
                             </div>

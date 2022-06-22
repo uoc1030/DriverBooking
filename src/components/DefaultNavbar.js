@@ -67,7 +67,13 @@ export default function DefaultNavbar() {
                 Register
               </NavLink>
               {user?.displayName ? (
-                <Button onClick={handleLogOut}>Log Out</Button>
+                <Button
+                  onClick={handleLogOut}
+                    color="transparent"
+                    className="bg-white text-black ml-4"
+                    ripple="dark"
+                  >Log Out
+                </Button>
               ) : (
                 <Link to="/login">
                   <Button
