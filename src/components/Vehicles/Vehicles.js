@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -38,15 +38,15 @@ function handleEdit(ed) {
   console.log('Edit Success');
 }
 function createData(
-  id: number,
-  vehicleName: string,
-  manufacturer:string,
-  categoryId: string,
-  groupId:number,
-  img:string,
-  driverId:number,
-  driverName:string,
-  categoryName:String,
+  id,
+  vehicleName,
+  manufacturer,
+  categoryId,
+  groupId,
+  img,
+  driverId,
+  driverName,
+  categoryName,
 
 ) {
   return { id, vehicleName, manufacturer, categoryId, groupId, img, driverId, driverName,categoryName, };
@@ -54,15 +54,17 @@ function createData(
 
 const rows = [
   createData(1, 'Sirus', 'No Informaton', 'No Informaton', 821,'img', 2001 , 'Nguyễn Văn A','Null' ),
-  createData(2, 'Dream', 'No Informaton', 'No Informaton',1235,'img', 2002, 'Nguyễn Văn A','Null'),
-  createData(3, 'Winner', 'No Informaton', 'No Informaton', 203,'img', 2003, 'Nguyễn Văn A','Null'),
-  createData(4, 'Vison', 'No Informaton', 'No Informaton', 200,'img', 2004, 'Nguyễn Văn A','Null'),
-  createData(5, 'SH', 'No Informaton', 'No Informaton', 2011,'img', 2005, 'Nguyễn Văn A','Null'),
+  
 ];
 
 export default function Area() {
     const [page, setPage] = React.useState(0);
+    const [userInfo, setUserInfo] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    useEffect(() => {
+      featchAccountList();
+    }, [])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -73,63 +75,54 @@ export default function Area() {
         setPage(0);
     };
     
-// async function featchAccountList() {
-//         try {
-//             const requestURL = http://127.0.0.1:8000/post/search_by_user_id?id=${localStorage.getItem('id-token')};
-//             const response = await fetch(requestURL, {
-//                 method: GET,
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                     // 'Authorization': Bearer ${localStorage.getItem('user-token')},
-//                 },
-//             });
-//             const responseJSON = await response.json();
+async function featchAccountList() {
+        try {
+            const requestURL = 'https://funtrip.azurewebsites.net/api/vehicles?all=true&pageNumber=1&pageSize=10';
+            const response = await fetch(requestURL, {
+                method: 'GET',
+            });
+            const responseJSON = await response.json();
+            setUserInfo(responseJSON)
+        } catch (error) {
+            console.log('Fail to fetch product list: ', error)
+        }
 
-//             const { data } = responseJSON;
-
-//             setPostList(responseJSON);
-
-//             return data
-//         } catch (error) {
-//             console.log('Fail to fetch product list: ', error)
-//         }
-
-//     }
+    }
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
         <TableHead>
           <TableRow>
         
-            <StyledTableCell align="right">Id</StyledTableCell>
-            <StyledTableCell align="right">vehicleName</StyledTableCell>
-            <StyledTableCell align="right">manufacturer</StyledTableCell>
-            <StyledTableCell align="right">categoryId</StyledTableCell>
-            <StyledTableCell align="right">groupId</StyledTableCell>
-            <StyledTableCell align="right">img</StyledTableCell>
-            <StyledTableCell align="right">driverId</StyledTableCell>
-            <StyledTableCell align="right">driverName</StyledTableCell>
-            <StyledTableCell align="right">categoryName</StyledTableCell>
-            <StyledTableCell align="right">Action</StyledTableCell>
+            <StyledTableCell align="center">Id</StyledTableCell>
+            <StyledTableCell align="center">vehicleName</StyledTableCell>
+            <StyledTableCell align="center">manufacturer</StyledTableCell>
+            <StyledTableCell align="center">categoryId</StyledTableCell>
+            <StyledTableCell align="center">groupId</StyledTableCell>
+            <StyledTableCell align="center">img</StyledTableCell>
+            <StyledTableCell align="center">driverId</StyledTableCell>
+            <StyledTableCell align="center">driverName</StyledTableCell>
+            <StyledTableCell align="center">categoryName</StyledTableCell>
+            <StyledTableCell align="center">Action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+        {userInfo && userInfo.map((userInfo,index) => (
+            <StyledTableRow key={index}>
  
-              <StyledTableCell align="right">{row.id}</StyledTableCell>
-              <StyledTableCell align="right">{row.vehicleName}</StyledTableCell>
-              <StyledTableCell align="right">{row.manufacturer}</StyledTableCell>
-              <StyledTableCell align="right">{row.categoryId}</StyledTableCell>
-              <StyledTableCell align="right">{row.groupId}</StyledTableCell>
-              <StyledTableCell align="right">{row.img}</StyledTableCell>
-              <StyledTableCell align="right">{row.driverId}</StyledTableCell>
-              <StyledTableCell align="right">{row.driverName}</StyledTableCell>
-              <StyledTableCell align="right">{row.categoryName}</StyledTableCell>
-              <StyledTableCell align="right">
+              <StyledTableCell align="center">{userInfo.id}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.vehicleName}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.manufacturer}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.categoryId}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.groupId}</StyledTableCell>
+              <StyledTableCell align="center"><img src={userInfo.img} className="w-12 h-8"/></StyledTableCell>
+              <StyledTableCell align="center">{userInfo.driverId}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.driverName}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.categoryName}</StyledTableCell>
+              <StyledTableCell align="center">
               <p className='pl-6 float-left text-green-500 text-lg' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
-              <p className='pl-6 text-green-500 text-lg'onClick={handleDelete}><i class="fa fa-edit"></i></p>
-              </StyledTableCell>
+              <p className='pl-6  text-green-500 text-lg'onClick={handleDelete}><i class="fa fa-edit"></i></p>
+              </StyledTableCell>  
             </StyledTableRow>
           ))}
         </TableBody>

@@ -30,16 +30,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  id,
-  apartmentName,
-  address,
-  districtId,
-  districtName,
-  numberOfGroups,
-) {
-  return { id, apartmentName, address, districtId, districtName, numberOfGroups };
-}
+
 function handleDelete(e) {
 
   console.log('Delete Success');
@@ -48,22 +39,68 @@ function handleEdit(ed) {
 
   console.log('Edit Success');
 }
+function createData(
+  //id,
+  //userId,
+  //startTime,
+  //endTime,
+  cost,
+  feedback,
+  //rate,
+  vehicleId,
+  driverId,
+  startLocationId,
+  endLocationId,
+  //isRoundTrip,
+  address,
+  employeeId,
+  //driverName,
+  //employeeName,
+  startLocation,
+  endLocation,
+  //userName,
+  //groupName,
+  //districtOutsideName,
+) {
+
+  return {
+  //id,
+  //userId,
+  //startTime,
+  //endTime,
+  cost,
+  feedback,
+ // rate,
+  vehicleId,
+  driverId,
+  startLocationId,
+  endLocationId,
+  address,
+  employeeId,
+  //driverName,
+  //employeeName,
+  startLocation,
+  endLocation,
+  //userName,
+ //groupName,
+ //districtOutsideName,
+ };
+}
 
 const rows = [
-  createData(1,"SUNNY NEW", "123 nguyen van tang", 1,"Quan 9", 2)
+  createData(1, 'uocnnse140739', '123', 'uocnnse140739@gmail.com', 1,'NULL'),
+  
 ];
 
-export default function Area() {
+export default function Account() {
     const [page, setPage] = React.useState(0);
     const [userInfo, setUserInfo] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
     
-
     useEffect(() => {
       featchAccountList();
     }, [])
-
+   
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -75,12 +112,14 @@ export default function Area() {
     
     async function featchAccountList() {
       try {
-          const requestURL ='https://funtrip.azurewebsites.net/api/areas?all=true&pageNumber=1&pageSize=10';
+          const requestURL = 'https://funtrip.azurewebsites.net/api/orders?all=true&pageNumber=1&pageSize=10';
+          //https://funtrip.azurewebsites.net/api/employees?name=&pageNumber=1&pageSize=10
           const response = await fetch(requestURL, {
               method: 'GET',
           });
           const responseJSON = await response.json();
           setUserInfo(responseJSON)
+          
       } catch (error) {
           console.log('Fail to fetch product list: ', error)
       }
@@ -90,30 +129,36 @@ export default function Area() {
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-        
-            <StyledTableCell align="center">Id</StyledTableCell>
-            <StyledTableCell align="center">ApartmentName</StyledTableCell>
+            <StyledTableCell align="center">DriverId</StyledTableCell>
+            <StyledTableCell align="center">VehicleId</StyledTableCell>
+            <StyledTableCell align="center">EmployeeId</StyledTableCell>
             <StyledTableCell align="center">Address</StyledTableCell>
-            <StyledTableCell align="center">District_ID</StyledTableCell>
-            <StyledTableCell align="center">DistrictName</StyledTableCell>
-            <StyledTableCell align="center">numberOfGroups</StyledTableCell>
-            <StyledTableCell align="center">Status</StyledTableCell>
+            <StyledTableCell align="center">StartLocation</StyledTableCell>
+            <StyledTableCell align="center">StartLocationID</StyledTableCell>
+            <StyledTableCell align="center">EndLocation</StyledTableCell>
+            <StyledTableCell align="center">EndLocationID</StyledTableCell>
+            <StyledTableCell align="center">Cost</StyledTableCell>
+            <StyledTableCell align="center">Feedback</StyledTableCell>
+            
+            <StyledTableCell align="center">action</StyledTableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-        {userInfo && userInfo.map((userInfo,index) => (
+        <TableBody> 
+            {userInfo && userInfo.map((userInfo,index) => (
             <StyledTableRow key={index}>
-              
-              <StyledTableCell align="center">{userInfo.id}</StyledTableCell>
-              <StyledTableCell align="center">{userInfo.apartmentName}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.driverId}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.vehicleId}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.employeeId}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.address}</StyledTableCell>
-              <StyledTableCell align="center">{userInfo.districtId}</StyledTableCell>
-              <StyledTableCell align="center">{userInfo.districtName}</StyledTableCell>
-              <StyledTableCell align="center">{userInfo.numberOfGroups}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.startLocation}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.startLocationId}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.endLocation}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.endLocationId}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.cost}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.feedback}</StyledTableCell>
               <StyledTableCell align="center">
-              <p className='pl-6 float-right text-green-500 text-lg' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
-              <p className='pl-12 ml-2 text-green-500 text-lg'onClick={handleDelete}><i class="fa fa-edit"></i></p>
-                
+              <p className='pl-6 float-right text-green-500 text-lg' onClick={handleEdit}><i className="fa fa-trash-alt"></i></p>
+              <p className='pl-6 text-green-500 text-lg'onClick={handleDelete}><i className="fa fa-edit"></i></p>
               </StyledTableCell>
             </StyledTableRow>
           ))}
