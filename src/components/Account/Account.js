@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
+import {  Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -30,16 +31,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(
-  id:int,
-  username: string,
-  password: string,
-  email: string,
-  roleId: int,
-  status: string,
-) {
-  return { id, username, password, email, roleId, status };
-}
+
 function handleDelete(e) {
 
   console.log('Delete Success');
@@ -48,18 +40,34 @@ function handleEdit(ed) {
 
   console.log('Edit Success');
 }
+
+function createData(
+  id,
+  username,
+  password,
+  email,
+  roleId,
+  status,
+) {
+  return { id, username, password, email, roleId, status };
+}
+
 const rows = [
   createData(1, 'uocnnse140739', '123', 'uocnnse140739@gmail.com', 1,'NULL'),
-  createData(2, 'uocnnse140739', '123', 'uocnnse140739@gmail.com',  1,'NULL'),
-  createData(3,'uocnnse140739', '123', 'uocnnse140739@gmail.com', 1,'NULL'),
-  createData(4, 'uocnnse140739','123', 'uocnnse140739@gmail.com', 1,'NULL'),
-  createData(5, 'uocnnse140739', '123', 'uocnnse140739@gmail.com', 1,'NULL'),
+  
 ];
 
 export default function Account() {
     const [page, setPage] = React.useState(0);
+    const [userInfo, setUserInfo] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    
 
+    // thêm
+    useEffect(() => {
+      featchAccountList();
+    }, [])
+   
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -69,57 +77,49 @@ export default function Account() {
         setPage(0);
     };
     
-// async function featchAccountList() {
-//         try {
-//             const requestURL = http://127.0.0.1:8000/post/search_by_user_id?id=${localStorage.getItem('id-token')};
-//             const response = await fetch(requestURL, {
-//                 method: GET,
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                     // 'Authorization': Bearer ${localStorage.getItem('user-token')},
-//                 },
-//             });
-//             const responseJSON = await response.json();
+async function featchAccountList() {
+        try {
+            const requestURL ='https://funtrip.azurewebsites.net/api/Account/1/10?all=true';
+            const response = await fetch(requestURL, {
+                method: 'GET',
+                
+            });
+            const responseJSON = await response.json();
+            setUserInfo(responseJSON)
 
-//             const { data } = responseJSON;
-
-//             setPostList(responseJSON);
-
-//             return data
-//         } catch (error) {
-//             console.log('Fail to fetch product list: ', error)
-//         }
-
-//     }
+        } catch (error) {
+            console.log('Fail to fetch product list: ', error)
+        }
+    }
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-        
-            <StyledTableCell align="right">Id</StyledTableCell>
-            <StyledTableCell align="right">username</StyledTableCell>
-            <StyledTableCell align="right">password</StyledTableCell>
-            <StyledTableCell align="right">email</StyledTableCell>
-            <StyledTableCell align="right">roleId</StyledTableCell>
-            <StyledTableCell align="right">status</StyledTableCell>
-            <StyledTableCell align="right">action</StyledTableCell>
+            <StyledTableCell align="center">Id</StyledTableCell>
+            <StyledTableCell align="center">username</StyledTableCell>
+            <StyledTableCell align="center">password</StyledTableCell>
+            <StyledTableCell align="center">email</StyledTableCell>
+            <StyledTableCell align="center">roleId</StyledTableCell>
+            <StyledTableCell align="center">status</StyledTableCell>
+            <StyledTableCell align="center">action</StyledTableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+        <TableBody> 
+            {userInfo && userInfo.map((userInfo,index) => (
+            <StyledTableRow key={index}>
+              <StyledTableCell align="center">{userInfo.id}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.username}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.password}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.email}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.roleId}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.status}</StyledTableCell>
+              <StyledTableCell align="center">
+              <Link  to="/Admin/Edit" >
+                  <p className='pl-6 text-green-500 text-lg'onClick={handleEdit}><i className="fa fa-edit"></i></p> 
+              </Link>
+              <p className='pl-6 float-right text-green-500 text-lg' onClick={handleDelete}><i className="fa fa-trash-alt"></i></p>
               
-              
-              <StyledTableCell align="right">{row.id}</StyledTableCell>
-              <StyledTableCell align="right">{row.username}</StyledTableCell>
-              <StyledTableCell align="right">{row.password}</StyledTableCell>
-              <StyledTableCell align="right">{row.email}</StyledTableCell>
-              <StyledTableCell align="right">{row.roleId}</StyledTableCell>
-              <StyledTableCell align="right">{row.status}</StyledTableCell>
-              <StyledTableCell align="right">
-              <p className='pl-6 float-right text-green-500 text-lg' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
-              <p className='pl-6 text-green-500 text-lg'onClick={handleDelete}><i class="fa fa-edit"></i></p>
               </StyledTableCell>
             </StyledTableRow>
           ))}

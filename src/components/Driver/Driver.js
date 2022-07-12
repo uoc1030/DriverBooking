@@ -1,4 +1,5 @@
-import * as React from 'react';
+
+import React, {useEffect} from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -31,25 +32,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function createData(
-  id: int,
-  username: string,
-  password: string,
-  gmail: string,
-  fullName: string,
-  address: string,
-  phone: string,
-  creditCard: string,
-  groupId: int,
-  vehicleId: int,
-  accountId: int,
-  img: string,
-  groupName: string,
-  vehicleName: string,
-  rate: int,
+  username,
+  password,
+  email,
+  phone,
+  creditCard,
+  groupId,
+  vehicleId,
+  img,
+  vehicleName,
   
 ) {
-  return { id, username, password, gmail, fullName, address, phone,creditCard, groupId,
-     vehicleId, accountId, img, groupName, vehicleName, rate, };
+  return {  username, password, email, phone,creditCard, groupId,
+     vehicleId, img, vehicleName, };
 }
 function handleDelete(e) {
 
@@ -60,16 +55,17 @@ function handleEdit(ed) {
   console.log('Edit Success');
 }
 const rows = [
-  createData('Frozen yoghurt', 1, 6.0, "uocne123", "uocnnse140739@fpt.edu.vn",'123 Nguyen Van Tang', '0123123123', 'Visa Card'),
-  createData('Ice cream sandwich', 2, 9.0, "uocne123","uocnnse140739@fpt.edu.vn",'123 Nguyen Van Tang', '0123123123', 'Visa Card'),
-  createData('Eclair', 3, 16.0, "uocne123", "uocnnse140739@fpt.edu.vn",'123 Nguyen Van Tang', '0123123123', 'Visa Card'),
-  createData('Cupcake', 4, 3.7, "uocne123", "uocnnse140739@fpt.edu.vn",'123 Nguyen Van Tang', '0123456123', 'Visa Card'),
-  createData('Gingerbread', 5, 16.0, "uocne123", "uocnnse140739@fpt.edu.vn",'123 Nguyen Van Tang', '0123456789', 'Visa Card'),
+  createData(1, 'uocne', 123, "uocnn140739@gmail.com", "Nguyễn Ngọc Uớc",'123 Nguyen Van Tang', '0123123123', 23109841,1,2,5,'https:/merry.blob.core.windows.net/yume/715840.jpg','Valkyrie','Mercedes màu xanh',0),
 ];
 
 export default function Area() {
     const [page, setPage] = React.useState(0);
+    const [userInfo, setUserInfo] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    useEffect(() => {
+      featchAccountList();
+    }, [])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -80,59 +76,52 @@ export default function Area() {
         setPage(0);
     };
     
-// async function featchAccountList() {
-//         try {
-//             const requestURL = http://127.0.0.1:8000/post/search_by_user_id?id=${localStorage.getItem('id-token')};
-//             const response = await fetch(requestURL, {
-//                 method: GET,
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                     // 'Authorization': Bearer ${localStorage.getItem('user-token')},
-//                 },
-//             });
-//             const responseJSON = await response.json();
-
-//             const { data } = responseJSON;
-
-//             setPostList(responseJSON);
-
-//             return data
-//         } catch (error) {
-//             console.log('Fail to fetch product list: ', error)
-//         }
-
-//     }
+    async function featchAccountList() {
+      try {
+          const requestURL ='https://funtrip.azurewebsites.net/api/drivers?all=true&pageNumber=1&pageSize=10';
+          const response = await fetch(requestURL, {
+              method: 'GET',  
+          });
+          const responseJSON = await response.json();
+          setUserInfo(responseJSON)
+      } catch (error) {
+          console.log('Fail to fetch product list: ', error)
+      }
+  }
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
         <TableHead>
           <TableRow>
         
-            <StyledTableCell align="center">Id</StyledTableCell>
+            
             <StyledTableCell align="center">username</StyledTableCell>
             <StyledTableCell align="center">password</StyledTableCell>
-            <StyledTableCell align="center">Gmail</StyledTableCell>
-            <StyledTableCell align="center">FullName</StyledTableCell>
-            <StyledTableCell align="center">Address</StyledTableCell>
+            <StyledTableCell align="center">email</StyledTableCell>
             <StyledTableCell align="center">Phone</StyledTableCell>
             <StyledTableCell align="center">CreditCard</StyledTableCell>
+            <StyledTableCell align="center">GroupId</StyledTableCell>
+            <StyledTableCell align="center">vehicleId</StyledTableCell>
+            <StyledTableCell align="center">img</StyledTableCell>
+            <StyledTableCell align="center">vehicleName</StyledTableCell>
             <StyledTableCell align="center">Action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
- 
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.name}</StyledTableCell>
-              <StyledTableCell align="right">{row.password}</StyledTableCell>
-              <StyledTableCell align="right">{row.mail}</StyledTableCell>
-              <StyledTableCell align="right">{row.name}</StyledTableCell>
-              <StyledTableCell align="right">{row.sugar}</StyledTableCell>
-              <StyledTableCell align="right">{row.phone}</StyledTableCell>
-              <StyledTableCell align="right">{row.creditCard}</StyledTableCell>
-              <StyledTableCell align="right">
-              <p className='pl-12  float-right  text-green-500 text-lg' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
+        {userInfo && userInfo.map((userInfo,index) => (
+            <StyledTableRow key={index}>
+              
+              <StyledTableCell align="center">{userInfo.username}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.password}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.email}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.phone}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.creditCard}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.groupId}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.vehicleId}</StyledTableCell>
+              <StyledTableCell align="center"><img src={userInfo.img} className="w-20 h-8"/></StyledTableCell>
+              <StyledTableCell align="center">{userInfo.vehicleName}</StyledTableCell>
+              <StyledTableCell align="center">
+              <p className='pl-6  float-left text-green-500 text-lg' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
               <p className='pl-12 text-green-500 text-lg'onClick={handleDelete}><i class="fa fa-edit"></i></p>
               </StyledTableCell>
             </StyledTableRow>

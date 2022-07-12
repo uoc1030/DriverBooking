@@ -21,6 +21,8 @@ import Employees from './pages/Employees';
 import Category from './pages/Category';
 import District from './pages/District';
 import Group from './pages/Group';
+import Order from "./pages/Order";
+import Edit from "components/Account/Edit";
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
         <Route path="/admin/category" element={<Category/>} />
         <Route path="/admin/district" element={<District/>} />
         <Route path="/admin/group" element={<Group/>} />
+        <Route path="/admin/order" element={<Order/>} />
+        <Route path="/admin/edit" element={<Edit/>} />
         <Route path="*" element={<Navigate to ="/" />}/>
       </Routes>
     </AuthContextProvider>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -29,6 +29,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+
+function createData(
+  id,
+  district1,
+  numberOfAreas,
+  
+)
+{
+  return { id,district1,numberOfAreas };
+}
 function handleDelete(e) {
 
   console.log('Delete Success');
@@ -36,25 +46,20 @@ function handleDelete(e) {
 function handleEdit(ed) {
 
   console.log('Edit Success');
-}
-function createData(
-  id: number,
-  district: string,
-  numberOfAreas: string,
-  
-) {
-  return { id,district,numberOfAreas };
-}
-
+};
 const rows = [
-  createData(1, '123 Nguyen Van Tang', 'NULL'),
-  createData(2, 'NULL','NULL'),
-  createData(3, 'NULL', 'NULL'),
+  createData(1, '123 Nguyen Van Tang', 'NULL')
 ];
+
 
 export default function Area() {
     const [page, setPage] = React.useState(0);
+    const [userInfo, setUserInfo] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    useEffect(() => {
+      featchAccountList();
+    }, [])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -65,50 +70,40 @@ export default function Area() {
         setPage(0);
     };
     
-// async function featchAccountList() {
-//         try {
-//             const requestURL = http://127.0.0.1:8000/post/search_by_user_id?id=${localStorage.getItem('id-token')};
-//             const response = await fetch(requestURL, {
-//                 method: GET,
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                     // 'Authorization': Bearer ${localStorage.getItem('user-token')},
-//                 },
-//             });
-//             const responseJSON = await response.json();
-
-//             const { data } = responseJSON;
-
-//             setPostList(responseJSON);
-
-//             return data
-//         } catch (error) {
-//             console.log('Fail to fetch product list: ', error)
-//         }
-
-//     }
+    async function featchAccountList() {
+      try {
+          const requestURL = 'https://funtrip.azurewebsites.net/api/districts?all=true&pageNumber=1&pageSize=10';
+          const response = await fetch(requestURL, {
+              method: 'GET',
+          });
+          const responseJSON = await response.json();
+          setUserInfo(responseJSON)
+          
+      } catch (error) {
+          console.log('Fail to fetch product list: ', error)
+      }
+  }
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
         <TableHead>
           <TableRow>
         
-            <StyledTableCell align="right">Id</StyledTableCell>
-            <StyledTableCell align="right">district</StyledTableCell>
-            <StyledTableCell align="right">numberOfAreas</StyledTableCell>
-            <StyledTableCell align="right">action</StyledTableCell>
+            <StyledTableCell align="center">Id</StyledTableCell>
+            <StyledTableCell align="center">district</StyledTableCell>
+            <StyledTableCell align="center">numberOfAreas</StyledTableCell>
+            <StyledTableCell align="center">action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              
-              
-              <StyledTableCell align="right">{row.id}</StyledTableCell>
-              <StyledTableCell align="right">{row.district}</StyledTableCell>
-              <StyledTableCell align="right">{row.numberOfAreas}</StyledTableCell>
-              <StyledTableCell align="right">
-              <p className='pl-6 float-right text-green-500 text-lg' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
+        {userInfo && userInfo.map((userInfo,index) => (
+            <StyledTableRow key={index}>
+
+              <StyledTableCell align="center">{userInfo.id}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.district1}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.numberOfAreas}</StyledTableCell>
+              <StyledTableCell align="center">
+              <p className='pl-6 float-right text-green-500 text-lg ' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
               <p className='pl-6 text-green-500 text-lg'onClick={handleDelete}><i class="fa fa-edit"></i></p>
               </StyledTableCell>
             </StyledTableRow>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -38,77 +38,66 @@ function handleEdit(ed) {
   console.log('Edit Success');
 }
 function createData(
-  id: number,
-  category: string,
-  numberOfCars: number,
+  id,
+  category1,
+  numberOfCars,
   
 ) {
-  return { id,category,numberOfCars };
+  return { id,category1,numberOfCars };
 }
 
 const rows = [
   createData(1, 'NULL', 23566),
-  createData(2, 'NULL',23356),
-  createData(3, 'NULL', 25587),
 ];
 
 export default function Area() {
     const [page, setPage] = React.useState(0);
+    const [userInfo, setUserInfo] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+    useEffect(() => {
+      featchAccountList();
+    }, [])
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
-
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
     
-// async function featchAccountList() {
-//         try {
-//             const requestURL = http://127.0.0.1:8000/post/search_by_user_id?id=${localStorage.getItem('id-token')};
-//             const response = await fetch(requestURL, {
-//                 method: GET,
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                     // 'Authorization': Bearer ${localStorage.getItem('user-token')},
-//                 },
-//             });
-//             const responseJSON = await response.json();
+    async function featchAccountList() {
+      try {
+          const requestURL ='https://funtrip.azurewebsites.net/api/categories?pageNumber=1&pageSize=10';
+          const response = await fetch(requestURL, {
+              method: 'GET',
+          });
+          const responseJSON = await response.json();
+          setUserInfo(responseJSON)
 
-//             const { data } = responseJSON;
-
-//             setPostList(responseJSON);
-
-//             return data
-//         } catch (error) {
-//             console.log('Fail to fetch product list: ', error)
-//         }
-
-//     }
+      } catch (error) {
+          console.log('Fail to fetch product list: ', error)
+      }
+  }
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-        
-            <StyledTableCell align="right">Id</StyledTableCell>
-            <StyledTableCell align="right">Category</StyledTableCell>
-            <StyledTableCell align="right">numberOfCars</StyledTableCell>
+            <StyledTableCell align="center">Id</StyledTableCell>
+            <StyledTableCell align="center">Category</StyledTableCell>
+            <StyledTableCell align="center">numberOfCars</StyledTableCell>
             <StyledTableCell align="right">action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              
-              
-              <StyledTableCell align="right">{row.id}</StyledTableCell>
-              <StyledTableCell align="right">{row.category}</StyledTableCell>
-              <StyledTableCell align="right">{row.numberOfCars}</StyledTableCell>
-              
-              <StyledTableCell align="right">
+        {userInfo && userInfo.map((userInfo,index) => (
+            <StyledTableRow key={index}>
+              <StyledTableCell align="center">{userInfo.id}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.category1}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.numberOfCars}</StyledTableCell>
+
+              <StyledTableCell align="right" >
               <p className='pl-6 float-right text-green-500 text-lg' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
               <p className='pl-6 text-green-500 text-lg'onClick={handleDelete}><i class="fa fa-edit"></i></p>
               </StyledTableCell>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -29,6 +29,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+function createData(
+  id,
+  groupname,
+  managerId,
+  apartmentId,
+  phone,
+  numberOfMembers,
+  numberOfAreas,
+) 
+{
+  return { id, groupname, managerId, apartmentId, phone, numberOfMembers, numberOfAreas };
+}
 function handleDelete(e) {
 
   console.log('Delete Success');
@@ -36,29 +48,20 @@ function handleDelete(e) {
 function handleEdit(ed) {
 
   console.log('Edit Success');
-}
-function createData(
-  id: number,
-  groupname: string,
-  managerId: string,
-  apartmentId:String,
-  phone:number,
-  numberOfMembers:number,
-  numberOfAreas:String,
-  
-) {
-  return { id, groupname, managerId, apartmentId, phone, numberOfMembers, numberOfAreas };
-}
+};
 
 const rows = [
-  createData(1, 'SirusTeam', 'NULL','NULL','0123456789','NULL','NULL' ),
-  createData(2, 'WinnerTeam','NULL','NULL','0123456789','NULL','NULL' ),
-  createData(3, 'AllTeam', 'NULL','NULL','0123456789','NULL','NULL' ),
+  createData(1, 'SirusTeam', 'NULL','NULL','0123456789','NULL','NULL' )
 ];
 
 export default function Area() {
     const [page, setPage] = React.useState(0);
+    const [userInfo, setUserInfo] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    useEffect(() => {
+      featchAccountList();
+    }, [])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -69,57 +72,47 @@ export default function Area() {
         setPage(0);
     };
     
-// async function featchAccountList() {
-//         try {
-//             const requestURL = http://127.0.0.1:8000/post/search_by_user_id?id=${localStorage.getItem('id-token')};
-//             const response = await fetch(requestURL, {
-//                 method: GET,
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                     // 'Authorization': Bearer ${localStorage.getItem('user-token')},
-//                 },
-//             });
-//             const responseJSON = await response.json();
-
-//             const { data } = responseJSON;
-
-//             setPostList(responseJSON);
-
-//             return data
-//         } catch (error) {
-//             console.log('Fail to fetch product list: ', error)
-//         }
-
-//     }
+async function featchAccountList() {
+        try {
+            const requestURL = 'https://funtrip.azurewebsites.net/api/groups?all=true&pageNumber=1&pageSize=10';
+            const response = await fetch(requestURL, {
+                method: 'GET',  
+            });
+            const responseJSON = await response.json();
+            setUserInfo(responseJSON)
+            
+        } catch (error) {
+            console.log('Fail to fetch product list: ', error)
+        }
+    }
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-        
-            <StyledTableCell align="right">Id</StyledTableCell>
-            <StyledTableCell align="right">Groupname</StyledTableCell>
-            <StyledTableCell align="right">ManagerId</StyledTableCell>
-            <StyledTableCell align="right">ApartmentId</StyledTableCell>
-            <StyledTableCell align="right">Phone</StyledTableCell>
-            <StyledTableCell align="right">NumberOfMembers</StyledTableCell>
-            <StyledTableCell align="right">NumberOfAreas</StyledTableCell>
-            <StyledTableCell align="right">Action</StyledTableCell>
+
+            <StyledTableCell align="center">Id</StyledTableCell>
+            <StyledTableCell align="center">Groupname</StyledTableCell>
+            <StyledTableCell align="center">ManagerId</StyledTableCell>
+            <StyledTableCell align="center">ApartmentId</StyledTableCell>
+            <StyledTableCell align="center">Phone</StyledTableCell>
+            <StyledTableCell align="center">NumberOfMembers</StyledTableCell>
+            <StyledTableCell align="center">NumberOfAreas</StyledTableCell>
+            <StyledTableCell align="center">Action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              
-              
-              <StyledTableCell align="right">{row.id}</StyledTableCell>
-              <StyledTableCell align="right">{row.groupname}</StyledTableCell>
-              <StyledTableCell align="right">{row.managerId}</StyledTableCell>
-              <StyledTableCell align="right">{row.apartmentId}</StyledTableCell>
-              <StyledTableCell align="right">{row.phone}</StyledTableCell>
-              <StyledTableCell align="right">{row.numberOfMembers}</StyledTableCell>
-              <StyledTableCell align="right">{row.numberOfAreas}</StyledTableCell>
-              <StyledTableCell align="right">
+        {userInfo && userInfo.map((userInfo,index) =>(
+            <StyledTableRow key={index}>
+
+              <StyledTableCell align="center">{userInfo.id}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.groupname}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.managerId}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.apartmentId}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.phone}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.numberOfMembers}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.numberOfAreas}</StyledTableCell>
+              <StyledTableCell align="center">
               <p className='pl-6 float-left text-green-500 text-lg' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
               <p className='pl-6 text-green-500 text-lg'onClick={handleDelete}><i class="fa fa-edit"></i></p>
               </StyledTableCell>
