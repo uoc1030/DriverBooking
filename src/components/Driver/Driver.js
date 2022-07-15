@@ -9,6 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
+import Image from '@material-tailwind/react/Image';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -118,7 +119,7 @@ export default function Area() {
               <StyledTableCell align="center">{userInfo.creditCard}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.groupId}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.vehicleId}</StyledTableCell>
-              <StyledTableCell align="center"><img src={userInfo.img} className="w-20 h-8"/></StyledTableCell>
+              <StyledTableCell align="center"><Image src={userInfo.img} className="w-20 h-8"/></StyledTableCell>
               <StyledTableCell align="center">{userInfo.vehicleName}</StyledTableCell>
               <StyledTableCell align="center">
               <p className='pl-6  float-left text-green-500 text-lg' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
