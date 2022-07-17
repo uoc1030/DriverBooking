@@ -11,6 +11,7 @@ import NavLink from "@material-tailwind/react/NavLink";
 // import Dropdown from "@material-tailwind/react/Dropdown";
 // import DropdownItem from "@material-tailwind/react/DropdownItem";
 import Icon from "@material-tailwind/react/Icon";
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import Button from "@material-tailwind/react/Button";
 import { UserAuth } from "../context/AuthContext";
 
@@ -62,6 +63,10 @@ export default function DefaultNavbar() {
               <NavLink href="/profile" rel="noreferrer" ripple="light">
                 <Icon family="font-awesome" name="fab fa-github" size="xl" />
                 &nbsp;Profile
+              </NavLink>
+              <NavLink href="/admin" rel="noreferrer" ripple="light">
+                <AssignmentIndIcon family="font-awesome" size="xl" />
+                &nbsp;Admin
               </NavLink>
               <NavLink href="/register" rel="noreferrer" ripple="light">
                 Register

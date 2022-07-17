@@ -32,18 +32,18 @@ function App() {
         <Route path="/profile" element={<Protected> <Profile/> </Protected>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
-        <Route path="/admin" element={<Admin/>} />
-        <Route path="/admin/dashboard" element={<Dashboard/>} />
-        <Route path="/admin/account" element={<Account/>} />
-        <Route path="/admin/area" element={<Area/>} />
-        <Route path="/admin/driver" element={<Driver/>} />
-        <Route path="/admin/vehicles" element={<Vehicles/>} />
-        <Route path="/admin/employees" element={<Employees/>} />
-        <Route path="/admin/category" element={<Category/>} />
-        <Route path="/admin/district" element={<District/>} />
-        <Route path="/admin/group" element={<Group/>} />
-        <Route path="/admin/order" element={<Order/>} />
-        <Route path="/admin/edit" element={<Edit/>} />
+        <Route path="/admin" element={ <Protected> <Admin/> </Protected> }/>
+        <Route path="/admin/dashboard" element={ <Protected><Dashboard/></Protected> } />
+        <Route path="/admin/account" element={ <Protected> <Account/> </Protected> } />
+        <Route path="/admin/area" element={ <Protected> <Area/> </Protected> } />
+        <Route path="/admin/driver" element={ <Protected> <Driver/> </Protected> } />
+        <Route path="/admin/vehicles" element={ <Protected> <Vehicles/> </Protected> } />
+        <Route path="/admin/employees" element={ <Protected> <Employees/> </Protected> } />
+        <Route path="/admin/category" element={ <Protected> <Category/> </Protected> } />
+        <Route path="/admin/district" element={ <Protected> <District/> </Protected> } />
+        <Route path="/admin/group" element={ <Protected> <Group/> </Protected> } />
+        <Route path="/admin/order" element={ <Protected> <Order/> </Protected> } />
+        <Route path="/admin/edit" element={ <Protected> <Edit/> </Protected> } />
         <Route path="*" element={<Navigate to ="/" />}/>
       </Routes>
     </AuthContextProvider>
