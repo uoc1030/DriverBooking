@@ -25,7 +25,7 @@ export default function DefaultNavbarAdmin() {
 
    return (
       <aside className='fixed h-screen w-64 rounded-none' aria-label="Sidebar">
-         <div className="overflow-y-auto rounded-none  px-3 bg-red-600 text-white  h-screen  dark:bg-gray-800">
+         <div className="overflow-y-auto rounded-none  px-3 bg-gray-600 text-white  h-screen  dark:bg-gray-800">
             <div className='text-white ml-16 h-16 tracking-widest pt-3  text font-bold text-3xl'>
                FPT
             </div>
@@ -94,17 +94,17 @@ export default function DefaultNavbarAdmin() {
                   </NavLink>
                </li>
                <li>
-                  <NavLink activeStyle={{ backgroundColor: 'rgb(243 244 246)', color: 'black' }} to="/UsersManagement" className="flex hover:text-black items-center p-2 text-base font-normal  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                  <NavLink activeStyle={{ backgroundColor: 'rgb(243 244 246)', color: 'black' }} to="/" className="flex hover:text-black items-center p-2 text-base font-normal  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                      <CheckCircleIcon className="w-6 h-6 text-gray-500 transition -mt-2 duration-75 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" />
-                     <span className="ml-3">TestAu</span>
+                     <span className="ml-3">HomePage</span>
                   </NavLink>
                </li>
-               <li>
+               {/* <li>
                   <NavLink activeStyle={{ backgroundColor: 'rgb(243 244 246)', color: 'black' }} to="/UsersManagement" className="flex hover:text-black items-center p-2 text-base font-normal  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                      <CloudIcon className="w-6 h-6 text-gray-500 transition -mt-2 duration-75 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" />
                      <span className="ml-3">WeatherForecast</span>
                   </NavLink>
-               </li>
+               </li> */}
                
             </ul>
          </div>
