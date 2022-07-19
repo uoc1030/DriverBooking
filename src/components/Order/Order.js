@@ -129,9 +129,9 @@ export default function Account() {
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">DriverId</StyledTableCell>
-            <StyledTableCell align="center">VehicleId</StyledTableCell>
-            <StyledTableCell align="center">EmployeeId</StyledTableCell>
+            <StyledTableCell align="center">DriverID</StyledTableCell>
+            <StyledTableCell align="center">VehicleID</StyledTableCell>
+            <StyledTableCell align="center">EmployeeID</StyledTableCell>
             <StyledTableCell align="center">Address</StyledTableCell>
             <StyledTableCell align="center">StartLocation</StyledTableCell>
             <StyledTableCell align="center">StartLocationID</StyledTableCell>

@@ -91,10 +91,10 @@ async function featchAccountList() {
         <TableHead>
           <TableRow>
 
-            <StyledTableCell align="center">Id</StyledTableCell>
-            <StyledTableCell align="center">Groupname</StyledTableCell>
-            <StyledTableCell align="center">ManagerId</StyledTableCell>
-            <StyledTableCell align="center">ApartmentId</StyledTableCell>
+            <StyledTableCell align="center">ID</StyledTableCell>
+            <StyledTableCell align="center">Group Name</StyledTableCell>
+            <StyledTableCell align="center">ManagerID</StyledTableCell>
+            <StyledTableCell align="center">ApartmentID</StyledTableCell>
             <StyledTableCell align="center">Phone</StyledTableCell>
             <StyledTableCell align="center">NumberOfMembers</StyledTableCell>
             <StyledTableCell align="center">NumberOfAreas</StyledTableCell>

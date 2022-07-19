@@ -93,16 +93,16 @@ async function featchAccountList() {
     }
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 200 }} aria-label="customized table">
+      <Table sx={{ minWidth: 300 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">Id</StyledTableCell>
-            <StyledTableCell align="center">username</StyledTableCell>
-            <StyledTableCell align="center">password</StyledTableCell>
-            <StyledTableCell align="center">email</StyledTableCell>
-            <StyledTableCell align="center">roleId</StyledTableCell>
-            <StyledTableCell align="center">status</StyledTableCell>
-            <StyledTableCell align="center">action</StyledTableCell>
+            <StyledTableCell align="center">ID</StyledTableCell>
+            <StyledTableCell align="center">UserName</StyledTableCell>
+            <StyledTableCell align="center">Password</StyledTableCell>
+            <StyledTableCell align="center">Email</StyledTableCell>
+            <StyledTableCell align="center">RoleID</StyledTableCell>
+            <StyledTableCell align="center">Status</StyledTableCell>
+            <StyledTableCell align="center">Action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody> 
@@ -116,9 +116,9 @@ async function featchAccountList() {
               <StyledTableCell align="center">{userInfo.status}</StyledTableCell>
               <StyledTableCell align="center">
               <Link  to="/Admin/Edit" >
-                  <p className='pl-6 text-green-500 text-lg'onClick={handleEdit}><i className="fa fa-edit"></i></p> 
+                  <p className=' text-green-500 text-lg'onClick={handleEdit}><i className="fa fa-edit"></i></p> 
               </Link>
-              <p className='pl-6 float-right text-green-500 text-lg' onClick={handleDelete}><i className="fa fa-trash-alt"></i></p>
+              <p className=' float-right text-green-500 text-lg' onClick={handleDelete}><i className="fa fa-trash-alt"></i></p>
               
               </StyledTableCell>
             </StyledTableRow>

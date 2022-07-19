@@ -90,18 +90,6 @@ export default function DefaultNavbar() {
                   </Button>
                 </Link>
               )}
-              {/* <a
-                                href="/login"
-                                rel="noreferrer"
-                            >
-                                <Button
-                                    color="transparent"
-                                    className="bg-white text-black ml-4"
-                                    ripple="dark"
-                                >
-                                    Login
-                                </Button>
-                            </a> */}
             </div>
           </Nav>
         </NavbarCollapse>

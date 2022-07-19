@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
+import Button from '@material-tailwind/react/Button';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -92,12 +93,12 @@ export default function Area() {
           <TableRow>
         
             <StyledTableCell align="center">Id</StyledTableCell>
-            <StyledTableCell align="center">ApartmentName</StyledTableCell>
+            <StyledTableCell align="center">Apartment Name</StyledTableCell>
             <StyledTableCell align="center">Address</StyledTableCell>
-            <StyledTableCell align="center">District_ID</StyledTableCell>
+            <StyledTableCell align="center">DistrictID</StyledTableCell>
             <StyledTableCell align="center">DistrictName</StyledTableCell>
-            <StyledTableCell align="center">numberOfGroups</StyledTableCell>
-            <StyledTableCell align="center">Status</StyledTableCell>
+            <StyledTableCell align="center">Group Number</StyledTableCell>
+            <StyledTableCell align="center">Action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -111,8 +112,8 @@ export default function Area() {
               <StyledTableCell align="center">{userInfo.districtName}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.numberOfGroups}</StyledTableCell>
               <StyledTableCell align="center">
-              <p className='pl-6 float-right text-green-500 text-lg' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
-              <p className='pl-12 ml-2 text-green-500 text-lg'onClick={handleDelete}><i class="fa fa-edit"></i></p>
+              <Button size="sm" color="amber" className='pl-6  flex flex-row text-red-500 text-lg bg-stone-50' onClick={handleEdit}><i className="fa fa-trash-alt"></i></Button>
+              <Button size="sm" color="amber" className='pl-12 text-green-500 text-lg bg-stone-50'onClick={handleDelete}><i className="fa fa-edit"></i></Button>
                 
               </StyledTableCell>
             </StyledTableRow>

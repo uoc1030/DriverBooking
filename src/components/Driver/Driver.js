@@ -9,6 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
+import Button from '@material-tailwind/react/Button';
 import Image from '@material-tailwind/react/Image';
 
 
@@ -96,15 +97,14 @@ export default function Area() {
           <TableRow>
         
             
-            <StyledTableCell align="center">username</StyledTableCell>
-            <StyledTableCell align="center">password</StyledTableCell>
-            <StyledTableCell align="center">email</StyledTableCell>
+            <StyledTableCell align="center">Name</StyledTableCell>
+            <StyledTableCell align="center">Email</StyledTableCell>
             <StyledTableCell align="center">Phone</StyledTableCell>
-            <StyledTableCell align="center">CreditCard</StyledTableCell>
-            <StyledTableCell align="center">GroupId</StyledTableCell>
-            <StyledTableCell align="center">vehicleId</StyledTableCell>
-            <StyledTableCell align="center">img</StyledTableCell>
-            <StyledTableCell align="center">vehicleName</StyledTableCell>
+            <StyledTableCell align="center">Credit Card</StyledTableCell>
+            <StyledTableCell align="center">GroupID</StyledTableCell>
+            <StyledTableCell align="center">VehicleID</StyledTableCell>
+            <StyledTableCell align="center">Images</StyledTableCell>
+            <StyledTableCell align="center">Vehicle Name</StyledTableCell>
             <StyledTableCell align="center">Action</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -113,7 +113,6 @@ export default function Area() {
             <StyledTableRow key={index}>
               
               <StyledTableCell align="center">{userInfo.username}</StyledTableCell>
-              <StyledTableCell align="center">{userInfo.password}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.email}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.phone}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.creditCard}</StyledTableCell>
@@ -122,8 +121,8 @@ export default function Area() {
               <StyledTableCell align="center"><Image src={userInfo.img} className="w-20 h-8"/></StyledTableCell>
               <StyledTableCell align="center">{userInfo.vehicleName}</StyledTableCell>
               <StyledTableCell align="center">
-              <p className='pl-6  float-left text-green-500 text-lg' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
-              <p className='pl-12 text-green-500 text-lg'onClick={handleDelete}><i class="fa fa-edit"></i></p>
+              <Button size="sm" color="amber" className='pl-6  flex flex-row text-red-500 text-lg bg-stone-50' onClick={handleEdit}><i class="fa fa-trash-alt"></i></Button>
+              <Button size="sm" color="amber" className='pl-12 text-green-500 text-lg bg-stone-50'onClick={handleDelete}><i class="fa fa-edit"></i></Button>
               </StyledTableCell>
             </StyledTableRow>
           ))}

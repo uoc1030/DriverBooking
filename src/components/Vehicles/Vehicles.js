@@ -94,15 +94,15 @@ async function featchAccountList() {
         <TableHead>
           <TableRow>
         
-            <StyledTableCell align="center">Id</StyledTableCell>
-            <StyledTableCell align="center">vehicleName</StyledTableCell>
-            <StyledTableCell align="center">manufacturer</StyledTableCell>
-            <StyledTableCell align="center">categoryId</StyledTableCell>
-            <StyledTableCell align="center">groupId</StyledTableCell>
-            <StyledTableCell align="center">img</StyledTableCell>
-            <StyledTableCell align="center">driverId</StyledTableCell>
-            <StyledTableCell align="center">driverName</StyledTableCell>
-            <StyledTableCell align="center">categoryName</StyledTableCell>
+            <StyledTableCell align="center">ID</StyledTableCell>
+            <StyledTableCell align="center">Vehicle Name</StyledTableCell>
+            <StyledTableCell align="center">Manufacturer</StyledTableCell>
+            <StyledTableCell align="center">CategoryID</StyledTableCell>
+            <StyledTableCell align="center">GroupId</StyledTableCell>
+            <StyledTableCell align="center">Images</StyledTableCell>
+            <StyledTableCell align="center">DriverID</StyledTableCell>
+            <StyledTableCell align="center">Driver Name</StyledTableCell>
+            <StyledTableCell align="center">Category Name</StyledTableCell>
             <StyledTableCell align="center">Action</StyledTableCell>
           </TableRow>
         </TableHead>
