@@ -22,7 +22,14 @@ import Category from './pages/Category';
 import District from './pages/District';
 import Group from './pages/Group';
 import Order from "./pages/Order";
-import Edit from "components/Account/Edit";
+import Edit from "components/Area/Edit";
+import DistrictEdit from "components/District/DistrictEdit";
+import DriverEdit from "components/Driver/DriverEdit";
+import EmployeesEdit from "components/Employees/EmployeesEdit";
+import GroupEdit from "components/Group/GroupEdit";
+import VehiclesEdit from "components/Vehicles/VehiclesEdit";
+import OrderCreate from "components/Order/OrderCreate";
+
 
 function App() {
   return (
@@ -43,7 +50,14 @@ function App() {
         <Route path="/admin/district" element={<District/>} />
         <Route path="/admin/group" element={<Group/>} />
         <Route path="/admin/order" element={<Order/>} />
-        <Route path="/admin/edit" element={<Edit/>} />
+        <Route path="/admin/edit/:id" element={<Edit/>} />
+        <Route path="/admin/DistrictEdit/:id" element={<DistrictEdit/>} />
+        <Route path="/admin/DriverEdit/:id" element={<DriverEdit/>} />
+        <Route path="/admin/EmployeesEdit/:id" element={<EmployeesEdit/>} />
+        <Route path="/admin/GroupEdit/:id" element={<GroupEdit/>} />
+        <Route path="/admin/OrderCreate" element={<OrderCreate/>} />
+        <Route path="/admin/VehiclesEdit/:id" element={<VehiclesEdit/>} />
+        
         <Route path="*" element={<Navigate to ="/" />}/>
       </Routes>
     </AuthContextProvider>
