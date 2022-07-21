@@ -23,7 +23,6 @@ export default function DefaultNavbarAdmin() {
         <div className="text-white p-10 text-2xl font-sans rounded-lg">
           <a
             href="/"
-            target="_blank"
             rel="noreferrer"
             className="mt-2 text-center w-full inline-block"
           >
