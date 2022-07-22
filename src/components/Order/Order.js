@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Search from "../Search";
 
 
@@ -136,18 +136,10 @@ export default function Account() {
           <StyledTableCell align="center">Id</StyledTableCell>
             <StyledTableCell align="center">Start Time</StyledTableCell>
             <StyledTableCell align="center">End Time</StyledTableCell>
-            <StyledTableCell align="center">DriverID</StyledTableCell>
-            <StyledTableCell align="center">VehicleID</StyledTableCell>
-            <StyledTableCell align="center">EmployeeID</StyledTableCell>
-            <StyledTableCell align="center">Address</StyledTableCell>
-            <StyledTableCell align="center">StartLocation</StyledTableCell>
-            <StyledTableCell align="center">StartLocationID</StyledTableCell>
-            <StyledTableCell align="center">EndLocation</StyledTableCell>
-            <StyledTableCell align="center">EndLocationID</StyledTableCell>
             <StyledTableCell align="center">Cost</StyledTableCell>
-            <StyledTableCell align="center">Vehicle Id</StyledTableCell>
-            <StyledTableCell align="center">Driver Id</StyledTableCell>
-            <StyledTableCell align="center">Start Location Id</StyledTableCell>
+            <StyledTableCell align="center">VehicleID</StyledTableCell>
+            <StyledTableCell align="center">DriverID</StyledTableCell>
+            <StyledTableCell align="center">StartLocationID</StyledTableCell>
             <StyledTableCell align="center">Is Round Trip</StyledTableCell>
             <StyledTableCell align="center">Address</StyledTableCell>
             <StyledTableCell align="center">Employee Id</StyledTableCell>

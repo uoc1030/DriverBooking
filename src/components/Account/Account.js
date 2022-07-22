@@ -106,13 +106,6 @@ async function featchAccountList(key="") {
               <StyledTableCell align="center">{userInfo.email}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.roleId}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.status}</StyledTableCell>
-              <StyledTableCell align="center">
-              <Link  to="/Admin/Edit" >
-                  <p className='pl-6 text-green-500 text-lg'onClick={handleEdit}><i className="fa fa-edit"></i></p> 
-              </Link>
-              <p className='pl-6 float-right text-green-500 text-lg' onClick={handleDelete}><i className="fa fa-trash-alt"></i></p>
-              
-              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

@@ -9,7 +9,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
-import Button from '@material-tailwind/react/Button';
 import Image from '@material-tailwind/react/Image';
 import { NavLink } from 'react-router-dom';
 import Search from "../Search";
@@ -123,9 +122,10 @@ export default function Driver() {
       <Search parentCallback={callbackSearch} />
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
         <TableHead>
-            <StyledTableCell align="center">Email</StyledTableCell>
+          <TableRow>
+            <StyledTableCell align="center">Id</StyledTableCell>
             <StyledTableCell align="center">Name</StyledTableCell>
-          <StyledTableCell align="center">Id</StyledTableCell>
+            <StyledTableCell align="center">Email</StyledTableCell>
             <StyledTableCell align="center">Phone</StyledTableCell>
             <StyledTableCell align="center">Credit Card</StyledTableCell>
             <StyledTableCell align="center">GroupID</StyledTableCell>

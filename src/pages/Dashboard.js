@@ -8,10 +8,7 @@ import DefaultNavbarAdmin from './Admin'
 export default function Dashboard() {
     return (
         <>
-        <div className="w-8/12">
-            <DefaultNavbarAdmin/>
-        </div>
-        <div className="w-4/12">
+        <DefaultNavbarAdmin/>
             <div className="bg-light-blue-500 px-3 md:px-8 h-40" />
 
             <div className="px-3 md:px-8 -mt-24">
@@ -86,7 +83,6 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
-        </div>
         </>
     );
 }

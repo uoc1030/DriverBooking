@@ -67,10 +67,6 @@ async function handleDelete(userInfo) {
       })
   return res
 }
-function handleEdit(ed) {
-
-  console.log('Edit Success');
-};
 const rows = [
   createData(1, '123 Nguyen Van Tang', 'NULL')
 ];
