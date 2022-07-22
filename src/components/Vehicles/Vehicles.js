@@ -8,6 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
+import { NavLink} from 'react-router-dom';
+import Search from "../Search";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -29,14 +31,33 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-function handleDelete(e) {
+// hàm Delete
+async function handleDelete(userInfo) {
 
-  console.log('Delete Success');
-}
-function handleEdit(ed) {
+  let res = await fetch(`https://funtrip.azurewebsites.net/api/vehicles/${userInfo?.id}`, {
+      method: `DELETE`,
+      headers: {
+          'Content-Type': 'application/json',
 
-  console.log('Edit Success');
+      },
+  }).then(res => res.json())
+      .then(result => {
+
+          if (result?.resultCode === 1) {
+             
+            
+          } else {
+              alert("delete thất bại")
+          }
+          return res
+
+      })
+      .catch((error) => {
+          throw ('Invalid Token')
+      })
+  return res
 }
+
 function createData(
   id,
   vehicleName,
@@ -57,14 +78,20 @@ const rows = [
   
 ];
 
-export default function Area() {
+export default function Vehicle() {
     const [page, setPage] = React.useState(0);
     const [userInfo, setUserInfo] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [search, setSearch] = React.useState("");
 
     useEffect(() => {
-      featchAccountList();
-    }, [])
+      featchAccountList(search);
+    
+    }, [search])
+
+    const callbackSearch = (childData) => {
+      setSearch(childData)
+  };
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -75,7 +102,7 @@ export default function Area() {
         setPage(0);
     };
     
-async function featchAccountList() {
+async function featchAccountList(key="") {
         try {
             const requestURL = 'https://funtrip.azurewebsites.net/api/vehicles?all=true&pageNumber=1&pageSize=10';
             const response = await fetch(requestURL, {
@@ -90,6 +117,7 @@ async function featchAccountList() {
     }
   return (
     <TableContainer component={Paper}>
+      <Search parentCallback={callbackSearch} />
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -120,8 +148,14 @@ async function featchAccountList() {
               <StyledTableCell align="center">{userInfo.driverName}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.categoryName}</StyledTableCell>
               <StyledTableCell align="center">
-              <p className='pl-6 float-left text-green-500 text-lg' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
-              <p className='pl-6  text-green-500 text-lg'onClick={handleDelete}><i class="fa fa-edit"></i></p>
+              <NavLink activeStyle={{ color: '#3481C8' }} to={{
+                                        pathname: `/Admin/VehiclesEdit/${userInfo.id}`,
+                                        state: {
+                                            name: userInfo
+                                        }
+                                    }}
+                                   > <p className='pl-6 text-green-500 text-lg'><i className="fa fa-edit"></i></p> </NavLink>
+              <p className='pl-6 float-right text-green-500 text-lg'  onClick={() => handleDelete(userInfo) }><i class="fa fa-trash-alt"></i></p>
               </StyledTableCell>  
             </StyledTableRow>
           ))}

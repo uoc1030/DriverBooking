@@ -11,7 +11,8 @@ import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import Button from '@material-tailwind/react/Button';
 import Image from '@material-tailwind/react/Image';
-
+import { NavLink } from 'react-router-dom';
+import Search from "../Search";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,6 +35,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function createData(
+  id,
   username,
   password,
   email,
@@ -45,30 +47,56 @@ function createData(
   vehicleName,
   
 ) {
-  return {  username, password, email, phone,creditCard, groupId,
+  return { id, username, password, email, phone,creditCard, groupId,
      vehicleId, img, vehicleName, };
 }
-function handleDelete(e) {
+//delete
+async function handleDelete(userInfo) {
 
-  console.log('Delete Success');
-}
-function handleEdit(ed) {
+  let res = await fetch(`https://funtrip.azurewebsites.net/api/drivers/${userInfo?.id}`, {
+      method: `DELETE`,
+      headers: {
+          'Content-Type': 'application/json',
 
-  console.log('Edit Success');
+      },
+  }).then(res => res.json())
+      .then(result => {
+
+          if (result?.resultCode === 1) {
+             
+            
+          } else {
+              alert("delete thất bại")
+          }
+          return res
+
+      })
+      .catch((error) => {
+          throw ('Invalid Token')
+      })
+  return res
 }
+
+
 const rows = [
   createData(1, 'uocne', 123, "uocnn140739@gmail.com", "Nguyễn Ngọc Uớc",'123 Nguyen Van Tang', '0123123123', 23109841,1,2,5,'https:/merry.blob.core.windows.net/yume/715840.jpg','Valkyrie','Mercedes màu xanh',0),
 ];
 
-export default function Area() {
+export default function Driver() {
     const [page, setPage] = React.useState(0);
     const [userInfo, setUserInfo] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [search, setSearch] = React.useState("");
 
     useEffect(() => {
-      featchAccountList();
-    }, [])
+      featchAccountList(search);
+    
+    }, [search])
 
+    //search 
+    const callbackSearch = (childData) => {
+      setSearch(childData)
+  };
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -92,13 +120,12 @@ export default function Area() {
   }
   return (
     <TableContainer component={Paper}>
+      <Search parentCallback={callbackSearch} />
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
         <TableHead>
-          <TableRow>
-        
-            
-            <StyledTableCell align="center">Name</StyledTableCell>
             <StyledTableCell align="center">Email</StyledTableCell>
+            <StyledTableCell align="center">Name</StyledTableCell>
+          <StyledTableCell align="center">Id</StyledTableCell>
             <StyledTableCell align="center">Phone</StyledTableCell>
             <StyledTableCell align="center">Credit Card</StyledTableCell>
             <StyledTableCell align="center">GroupID</StyledTableCell>
@@ -111,7 +138,7 @@ export default function Area() {
         <TableBody>
         {userInfo && userInfo.map((userInfo,index) => (
             <StyledTableRow key={index}>
-              
+              <StyledTableCell align="center">{userInfo.id}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.username}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.email}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.phone}</StyledTableCell>
@@ -121,8 +148,14 @@ export default function Area() {
               <StyledTableCell align="center"><Image src={userInfo.img} className="w-20 h-8"/></StyledTableCell>
               <StyledTableCell align="center">{userInfo.vehicleName}</StyledTableCell>
               <StyledTableCell align="center">
-              <Button size="sm" color="amber" className='pl-6  flex flex-row text-red-500 text-lg bg-stone-50' onClick={handleEdit}><i class="fa fa-trash-alt"></i></Button>
-              <Button size="sm" color="amber" className='pl-12 text-green-500 text-lg bg-stone-50'onClick={handleDelete}><i class="fa fa-edit"></i></Button>
+              <p className='pl-6 float-right text-green-500 text-lg'  onClick={() => handleDelete(userInfo) }><i class="fa fa-trash-alt"></i></p>
+              <NavLink activeStyle={{ color: '#3481C8' }} to={{
+                                        pathname: `/Admin/DriverEdit/${userInfo.id}`,
+                                        state: {
+                                            name: userInfo
+                                        }
+                                    }}
+                                   > <p className='pl-6 text-green-500 text-lg'><i className="fa fa-edit"></i></p> </NavLink>
               </StyledTableCell>
             </StyledTableRow>
           ))}

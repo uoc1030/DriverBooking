@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {  Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
-
+import Search from "../Search";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -25,21 +24,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
+  
   '&:last-child td, &:last-child th': {
     border: 0,
   },
 }));
-
-
-function handleDelete(e) {
-
-  console.log('Delete Success');
-}
-function handleEdit(ed) {
-
-  console.log('Edit Success');
-}
 
 function createData(
   id,
@@ -57,16 +46,17 @@ const rows = [
   
 ];
 
+
 export default function Account() {
     const [page, setPage] = React.useState(0);
     const [userInfo, setUserInfo] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [search, setSearch] = React.useState("");
     
-
-    // thêm
     useEffect(() => {
-      featchAccountList();
-    }, [])
+      featchAccountList(search);
+    
+    }, [search])
    
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -76,10 +66,12 @@ export default function Account() {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-    
-async function featchAccountList() {
+    const callbackSearch = (childData) => {
+      setSearch(childData)
+  };
+async function featchAccountList(key="") {
         try {
-            const requestURL ='https://funtrip.azurewebsites.net/api/Account/1/10?all=true';
+            const requestURL =`https://funtrip.azurewebsites.net/api/Account/1/100?all=true `;
             const response = await fetch(requestURL, {
                 method: 'GET',
                 
@@ -93,7 +85,8 @@ async function featchAccountList() {
     }
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 300 }} aria-label="customized table">
+        <Search parentCallback={callbackSearch} />
+      <Table sx={{ minWidth: 200 }} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell align="center">ID</StyledTableCell>
@@ -102,7 +95,6 @@ async function featchAccountList() {
             <StyledTableCell align="center">Email</StyledTableCell>
             <StyledTableCell align="center">RoleID</StyledTableCell>
             <StyledTableCell align="center">Status</StyledTableCell>
-            <StyledTableCell align="center">Action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody> 
@@ -116,9 +108,9 @@ async function featchAccountList() {
               <StyledTableCell align="center">{userInfo.status}</StyledTableCell>
               <StyledTableCell align="center">
               <Link  to="/Admin/Edit" >
-                  <p className=' text-green-500 text-lg'onClick={handleEdit}><i className="fa fa-edit"></i></p> 
+                  <p className='pl-6 text-green-500 text-lg'onClick={handleEdit}><i className="fa fa-edit"></i></p> 
               </Link>
-              <p className=' float-right text-green-500 text-lg' onClick={handleDelete}><i className="fa fa-trash-alt"></i></p>
+              <p className='pl-6 float-right text-green-500 text-lg' onClick={handleDelete}><i className="fa fa-trash-alt"></i></p>
               
               </StyledTableCell>
             </StyledTableRow>

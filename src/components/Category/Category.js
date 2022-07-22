@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
+import Search from "../Search";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -29,14 +30,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-function handleDelete(e) {
 
-  console.log('Delete Success');
-}
-function handleEdit(ed) {
 
-  console.log('Edit Success');
-}
+
 function createData(
   id,
   category1,
@@ -54,6 +50,16 @@ export default function Area() {
     const [page, setPage] = React.useState(0);
     const [userInfo, setUserInfo] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [search, setSearch] = React.useState("");
+
+    useEffect(() => {
+      featchAccountList(search);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [search])
+
+    const callbackSearch = (childData) => {
+      setSearch(childData)
+  };
 
     useEffect(() => {
       featchAccountList();
@@ -65,10 +71,10 @@ export default function Area() {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-    
-    async function featchAccountList() {
+      
+    async function featchAccountList(key="") {
       try {
-          const requestURL ='https://funtrip.azurewebsites.net/api/categories?pageNumber=1&pageSize=10';
+          const requestURL ='https://funtrip.azurewebsites.net/api/categories?pageNumber=1&pageSize=100';
           const response = await fetch(requestURL, {
               method: 'GET',
           });
@@ -81,13 +87,13 @@ export default function Area() {
   }
   return (
     <TableContainer component={Paper}>
+      <Search parentCallback={callbackSearch} />
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell align="center">Id</StyledTableCell>
             <StyledTableCell align="center">Category</StyledTableCell>
             <StyledTableCell align="center">numberOfCars</StyledTableCell>
-            <StyledTableCell align="right">action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -96,11 +102,6 @@ export default function Area() {
               <StyledTableCell align="center">{userInfo.id}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.category1}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.numberOfCars}</StyledTableCell>
-
-              <StyledTableCell align="right" >
-              <p className='pl-6 float-right text-green-500 text-lg' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
-              <p className='pl-6 text-green-500 text-lg'onClick={handleDelete}><i class="fa fa-edit"></i></p>
-              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

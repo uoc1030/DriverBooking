@@ -8,6 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
+import { NavLink} from 'react-router-dom';
+import Search from "../Search";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -39,9 +41,31 @@ function createData(
 {
   return { id,district1,numberOfAreas };
 }
-function handleDelete(e) {
+// hàm Delete
+async function handleDelete(userInfo) {
 
-  console.log('Delete Success');
+  let res = await fetch(`https://funtrip.azurewebsites.net/api/districts/${userInfo?.id}`, {
+      method: `DELETE`,
+      headers: {
+          'Content-Type': 'application/json',
+
+      },
+  }).then(res => res.json())
+      .then(result => {
+
+          if (result?.resultCode === 1) {
+             
+            
+          } else {
+              alert("delete thất bại")
+          }
+          return res
+
+      })
+      .catch((error) => {
+          throw ('Invalid Token')
+      })
+  return res
 }
 function handleEdit(ed) {
 
@@ -56,10 +80,12 @@ export default function Area() {
     const [page, setPage] = React.useState(0);
     const [userInfo, setUserInfo] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [search, setSearch] = React.useState("");
 
     useEffect(() => {
-      featchAccountList();
-    }, [])
+      featchAccountList(search);
+    
+    }, [search])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -69,8 +95,10 @@ export default function Area() {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-    
-    async function featchAccountList() {
+    const callbackSearch = (childData) => {
+      setSearch(childData)
+  };
+    async function featchAccountList(key="") {
       try {
           const requestURL = 'https://funtrip.azurewebsites.net/api/districts?all=true&pageNumber=1&pageSize=10';
           const response = await fetch(requestURL, {
@@ -85,6 +113,7 @@ export default function Area() {
   }
   return (
     <TableContainer component={Paper}>
+      <Search parentCallback={callbackSearch} />
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -103,8 +132,15 @@ export default function Area() {
               <StyledTableCell align="center">{userInfo.district1}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.numberOfAreas}</StyledTableCell>
               <StyledTableCell align="center">
-              <p className='pl-6 float-right text-green-500 text-lg ' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
-              <p className='pl-6 text-green-500 text-lg'onClick={handleDelete}><i class="fa fa-edit"></i></p>
+                
+              <p className='pl-6 float-right text-green-500 text-lg'  onClick={() => handleDelete(userInfo) }><i class="fa fa-trash-alt"></i></p>
+              <NavLink activeStyle={{ color: '#3481C8' }} to={{
+                                        pathname: `/Admin/DistrictEdit/${userInfo.id}`,
+                                        state: {
+                                            name: userInfo
+                                        }
+                                    }}
+                                   > <p className='pl-6 text-green-500 text-lg'><i className="fa fa-edit"></i></p> </NavLink>
               </StyledTableCell>
             </StyledTableRow>
           ))}

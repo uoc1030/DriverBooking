@@ -8,7 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
-
+import { NavLink } from 'react-router-dom';
+import GroupSearch from "./GroupSearch";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -31,7 +32,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 function createData(
   id,
-  groupname,
+  groupName,
   managerId,
   apartmentId,
   phone,
@@ -39,29 +40,52 @@ function createData(
   numberOfAreas,
 ) 
 {
-  return { id, groupname, managerId, apartmentId, phone, numberOfMembers, numberOfAreas };
+  return { id, groupName, managerId, apartmentId, phone, numberOfMembers, numberOfAreas };
 }
-function handleDelete(e) {
+async function handleDelete(userInfo) {
 
-  console.log('Delete Success');
+  let res = await fetch(`https://funtrip.azurewebsites.net/api/groups/${userInfo?.id}`, {
+      method: `DELETE`,
+      headers: {
+          'Content-Type': 'application/json',
+
+      },
+  }).then(res => res.json())
+      .then(result => {
+
+          if (result?.resultCode === 1) {
+             
+            
+          } else {
+              alert("delete thất bại")
+          }
+          return res
+
+      })
+      .catch((error) => {
+          throw ('Invalid Token')
+      })
+  return res
 }
-function handleEdit(ed) {
-
-  console.log('Edit Success');
-};
 
 const rows = [
   createData(1, 'SirusTeam', 'NULL','NULL','0123456789','NULL','NULL' )
 ];
 
-export default function Area() {
+export default function Group() {
     const [page, setPage] = React.useState(0);
     const [userInfo, setUserInfo] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+    const [search, setSearch] = React.useState("");
+    
     useEffect(() => {
       featchAccountList();
-    }, [])
+      setPage(0);
+    }, [search]);
+
+    const callbackSearch = (childData) => {
+      setSearch(childData)
+  };
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -74,7 +98,7 @@ export default function Area() {
     
 async function featchAccountList() {
         try {
-            const requestURL = 'https://funtrip.azurewebsites.net/api/groups?all=true&pageNumber=1&pageSize=10';
+            const requestURL = `https://funtrip.azurewebsites.net/api/groups?all=true&groupName=${search}`;
             const response = await fetch(requestURL, {
                 method: 'GET',  
             });
@@ -87,6 +111,7 @@ async function featchAccountList() {
     }
   return (
     <TableContainer component={Paper}>
+      <GroupSearch parentCallback={callbackSearch} />
       <Table sx={{ minWidth: 200 }} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -104,17 +129,22 @@ async function featchAccountList() {
         <TableBody>
         {userInfo && userInfo.map((userInfo,index) =>(
             <StyledTableRow key={index}>
-
               <StyledTableCell align="center">{userInfo.id}</StyledTableCell>
-              <StyledTableCell align="center">{userInfo.groupname}</StyledTableCell>
+              <StyledTableCell align="center">{userInfo.groupName}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.managerId}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.apartmentId}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.phone}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.numberOfMembers}</StyledTableCell>
               <StyledTableCell align="center">{userInfo.numberOfAreas}</StyledTableCell>
               <StyledTableCell align="center">
-              <p className='pl-6 float-left text-green-500 text-lg' onClick={handleEdit}><i class="fa fa-trash-alt"></i></p>
-              <p className='pl-6 text-green-500 text-lg'onClick={handleDelete}><i class="fa fa-edit"></i></p>
+              <NavLink activeStyle={{ color: '#3481C8' }} to={{
+                                        pathname: `/Admin/GroupEdit/${userInfo.id}`,
+                                        state: {
+                                            name: userInfo
+                                        }
+                                    }}
+                                   > <p className='pl-6 text-green-500 text-lg'><i className="fa fa-edit"></i></p> </NavLink>
+              <p className='pl-6 float-right text-green-500 text-lg'  onClick={() => handleDelete(userInfo) }><i class="fa fa-trash-alt"></i></p>
               </StyledTableCell>
             </StyledTableRow>
           ))}
